@@ -55,7 +55,7 @@ public class main {
             String rev = "";
             for(int c = 0; c < BOARD_SIZE; c++) {
                 s += board[r][c];
-                rev += board[r][4-c];
+                rev += board[r][BOARD_SIZE-1-c];
             }
             if(dict.contains(s) || dict.contains(rev)) {
                 return false;
@@ -66,7 +66,7 @@ public class main {
             String rev = "";
             for(int r = 0; r < BOARD_SIZE; r++) {
                 s += board[r][c];
-                rev += board[4-r][c];
+                rev += board[BOARD_SIZE-1-r][c];
             }
             if(dict.contains(s) || dict.contains(rev)) {
                 return false;
