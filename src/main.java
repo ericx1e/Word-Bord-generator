@@ -4,29 +4,30 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class main {
-    static ArrayList<String> dict;
+    private static ArrayList<String> dict;
+    private static final int BOARD_SIZE = 4;
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner in = new Scanner(new File("words.txt"));
+        Scanner in = new Scanner(new File("words" + BOARD_SIZE + ".txt"));
         dict = new ArrayList<>();
         while(in.hasNext()) {
             dict.add(in.next());
         }
 
-        PrintWriter out = new PrintWriter(new File("boards.txt"));
+        PrintWriter out = new PrintWriter(new File("boards" + BOARD_SIZE + ".txt"));
 
-        for(int i = 0; i < 365 * 2; i++) {
-            char[][] board = new char[5][5];
-            for(int j = 0; j < 5; j++) {
+        for(int i = 0; i < 365 * 2; i++) { //two years of boards
+            char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
+            for(int j = 0; j < BOARD_SIZE; j++) {
                 int randI = (int)(Math.random() * dict.size());
                 board[j] = dict.get(randI).toCharArray();
             }
             while(!isValid(board)) {
-                for(int j = 0; j < 5; j++) {
+                for(int j = 0; j < BOARD_SIZE; j++) {
                     int randI = (int)(Math.random() * dict.size());
                     board[j] = shuffle(dict.get(randI)).toCharArray();
                 }
             }
-            for(int r = 0; r < 5; r++) {
+            for(int r = 0; r < BOARD_SIZE; r++) {
                 out.println(String.valueOf(board[r]));
             }
         }
@@ -34,7 +35,7 @@ public class main {
         out.close();
     }
 
-    static String shuffle(String s) {
+    private static String shuffle(String s) {
         List<Character> list = new ArrayList<Character>();
         for(char c : s.toCharArray()) {
             list.add(c);
@@ -48,11 +49,11 @@ public class main {
         return builder.toString();
     }
 
-    static boolean isValid(char[][] board) {
-        for(int r = 0; r < 5; r++) {
+    private static boolean isValid(char[][] board) {
+        for(int r = 0; r < BOARD_SIZE; r++) {
             String s = "";
             String rev = "";
-            for(int c = 0; c < 5; c++) {
+            for(int c = 0; c < BOARD_SIZE; c++) {
                 s += board[r][c];
                 rev += board[r][4-c];
             }
@@ -60,10 +61,10 @@ public class main {
                 return false;
             }
         }
-        for(int c = 0; c < 5; c++) {
+        for(int c = 0; c < BOARD_SIZE; c++) {
             String s = "";
             String rev = "";
-            for(int r = 0; r < 5; r++) {
+            for(int r = 0; r < BOARD_SIZE; r++) {
                 s += board[r][c];
                 rev += board[4-r][c];
             }
