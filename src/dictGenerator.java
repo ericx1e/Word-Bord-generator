@@ -16,6 +16,7 @@ public class dictGenerator {
                 result.add(s);
             }
         }
+        System.out.println(result.size());
         in.close();
 
         PrintWriter out = new PrintWriter(new File("words" + WORD_LENGTH + ".txt"));
