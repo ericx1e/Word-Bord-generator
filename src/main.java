@@ -4,8 +4,9 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class main {
-    private static ArrayList<String> dict;
-    private static final int BOARD_SIZE = 4;
+    public static ArrayList<String> dict;
+    public static final int BOARD_SIZE = 5;
+    public static final int TOTAL_MOVES = 20;
     public static void main(String[] args) throws FileNotFoundException {
         Scanner in = new Scanner(new File("words" + BOARD_SIZE + ".txt"));
         dict = new ArrayList<>();
@@ -27,9 +28,15 @@ public class main {
                     board[j] = shuffle(dict.get(randI)).toCharArray();
                 }
             }
-            for(int r = 0; r < BOARD_SIZE; r++) {
-                out.println(String.valueOf(board[r]));
-            }
+            System.out.println(i);
+
+//            for(int r = 0; r < BOARD_SIZE; r++) {
+//                System.out.println(String.valueOf(board[r]));
+//                out.println(String.valueOf(board[r]));
+//            }
+//            System.out.println();
+
+
         }
 
         out.close();
@@ -51,27 +58,26 @@ public class main {
 
     private static boolean isValid(char[][] board) {
         for(int r = 0; r < BOARD_SIZE; r++) {
-            String s = "";
-            String rev = "";
-            for(int c = 0; c < BOARD_SIZE; c++) {
-                s += board[r][c];
-                rev += board[r][BOARD_SIZE-1-c];
-            }
+            String s = String.valueOf(board[r]);
+            String rev = new StringBuilder(s).reverse().toString();
             if(dict.contains(s) || dict.contains(rev)) {
                 return false;
             }
         }
         for(int c = 0; c < BOARD_SIZE; c++) {
+            StringBuilder sb = new StringBuilder();
             String s = "";
             String rev = "";
             for(int r = 0; r < BOARD_SIZE; r++) {
-                s += board[r][c];
-                rev += board[BOARD_SIZE-1-r][c];
+                sb.append(board[r][c]);
             }
+            s = sb.toString();
+            rev = sb.reverse().toString();
             if(dict.contains(s) || dict.contains(rev)) {
                 return false;
             }
         }
-        return true;
+
+        return Solver.solveBoard(board) >= 35;
     }
 }
